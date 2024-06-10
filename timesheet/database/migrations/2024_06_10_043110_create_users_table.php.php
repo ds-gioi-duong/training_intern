@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id()->comment('Primary Key');
             $table->string('username', 255)->unique()->comment('Unique');
+            $table->string('email');
             $table->string('password', 255)->comment('Encrypted password');
             $table->string('avatar', 255)->nullable()->comment('URL to avatar image');
             $table->text('description')->nullable()->comment('User description');

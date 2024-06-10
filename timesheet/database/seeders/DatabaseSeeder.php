@@ -11,15 +11,17 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'username' => 'john_doe',
+                'username' => 'gioi',
+                'email' => 'gioi.trongxuan@gmail.com',
                 'password' => bcrypt('encrypted_password_123'),
                 'avatar' => 'https://example.com/avatar1.jpg',
                 'description' => 'Software engineer with 5 years of experience',
                 'role' => 'Admin',
             ],
             [
-                'username' => 'jane_smith',
-                'password' => bcrypt('encrypted_password_456'),
+                'username' => 'duong',
+                'email' => 'a@gmail.com',
+                'password' => bcrypt('a'),
                 'avatar' => 'https://example.com/avatar2.jpg',
                 'description' => 'Frontend developer passionate about UX/UI design',
                 'role' => 'User',
