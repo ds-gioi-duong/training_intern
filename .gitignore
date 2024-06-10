@@ -15,6 +15,7 @@
 /storage/logs/*
 /storage/app/public
 
+
 # Ignore Vagrant files
 Homestead.yaml
 Homestead.json
@@ -83,3 +84,5 @@ yarn-error.log*
 # Ignore all files with .asta.lock extension
 *.asta.lock
 /tmp
+
+
