@@ -2,11 +2,12 @@
  
 namespace App\Http\Controllers;
  
-use App\Models\Chirp;
+use App\Models\Timesheet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Diglactic\Breadcrumbs\Breadcrumbs;
  
 class TimesheetController extends Controller
 {
@@ -28,7 +29,7 @@ class TimesheetController extends Controller
     }
     public function index(): Response 
     {
-        return Inertia::render('Timesheet', [
+        return Inertia::classrender('Timesheet', [
             //
         ]);
     }

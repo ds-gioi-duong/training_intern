@@ -45,21 +45,6 @@ export default function Timesheet({ auth }) {
                                 <InputError message={errors.date} className="mt-2" />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="user_id" className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">
-                                    User ID:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="user_id"
-                                    name="user_id"
-                                    value={data.user_id}
-                                    onChange={(e) => setData('user_id', e.target.value)}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    required
-                                    readOnly
-                                />
-                            </div>
-                            <div className="mb-4">
                                 <label htmlFor="difficulties" className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">
                                     Difficulties:
                                 </label>
