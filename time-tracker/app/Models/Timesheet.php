@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Timesheet extends Model
 {
@@ -17,13 +19,13 @@ class Timesheet extends Model
     ];
 
     // Define the relationship with User
-    public function user()
+    public function user():BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     // Define the relationship with Task
-    public function tasks()
+    public function tasks():HasMany
     {
         return $this->hasMany(Task::class);
     }

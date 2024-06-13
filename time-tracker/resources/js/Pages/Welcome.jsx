@@ -2,7 +2,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Sun, Mars, Jupiter, Venus, Saturn, Moon, Mercury, SolarSystem } from '@/Components/planet';
 import { Link, Head } from '@inertiajs/react';
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome({ auth, laravelVersion, phpVersion,breadcrumbs }) {
     const handleImageError = () => {
         document.getElementById('screenshot-container')?.classList.add('!hidden');
         document.getElementById('docs-card')?.classList.add('!row-span-1');
@@ -40,7 +40,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                                         <a href={breadcrumb.url}>{breadcrumb.title}</a>
                                                     ) : (
                                                         <span>{breadcrumb.title}</span>
-                                                    )}
+                                                    )}  
                                                 </li>
                                             ))}
                                         </ol>
@@ -75,7 +75,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </div>
 
                             <div>
-                                Tuần :
+                                
                             </div>
                         </div>
 

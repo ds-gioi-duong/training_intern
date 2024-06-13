@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,7 +21,7 @@ class User extends Authenticatable
     ];
 
     // Define the relationship with Timesheet
-    public function timesheets()
+    public function timesheets():HasMany
     {
         return $this->hasMany(Timesheet::class);
     }
