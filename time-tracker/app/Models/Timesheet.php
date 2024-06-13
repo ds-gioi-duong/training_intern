@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\TimesheetCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
@@ -29,4 +30,8 @@ class Timesheet extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    protected $dispatchesEvents = [
+        'created' => TimesheetCreated::class,
+    ];
 }

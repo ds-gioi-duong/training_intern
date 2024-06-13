@@ -34,6 +34,15 @@ return [
     |            "failover", "roundrobin"
     |
     */
+    'mailgun' => [
+        'transport' => 'mailgun',
+        // 'client' => [
+        //     'timeout' => 5,
+        // ],
+    ],
+    'mailersend' => [
+        'transport' => 'mailersend',
+    ],
 
     'mailers' => [
 
@@ -94,6 +103,9 @@ return [
                 'postmark',
             ],
         ],
+        'mailersend' => [
+        'transport' => 'mailersend',
+    ],
 
     ],
 

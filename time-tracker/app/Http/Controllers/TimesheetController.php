@@ -1,21 +1,33 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
+use Illuminate\Support\Facades\Gate;
 use App\Models\Timesheet;
+use Inertia\Response;
+use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Inertia\Response;
-use Diglactic\Breadcrumbs\Breadcrumbs;
- 
-class TimesheetController extends Controller
+use App\Mail\TimesheetCreated;
+use Illuminate\Support\Facades\Mail;
+
+
+
+
+class TimeSheetController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     */    
+    public function index(): Response
+    {
+        $user = auth()->user();
+        return Inertia::render('ListTimesheet', [
+            'timesheets' => Timesheet::with('tasks')
+                ->where('user_id', $user->id)
+                ->get(),
+        ]);
+    }
     public function store(Request $request): RedirectResponse
     {
+
         $validated = $request->validate([
             'date' => 'required',
             'user_id' => 'required',
@@ -25,13 +37,36 @@ class TimesheetController extends Controller
 
         $request->user()->timesheets()->create($validated);
 
+
+        Mail::to('gioi.trongxuan@gmail.com')
+        ->cc('gioi-duong@dimage.co.jp')
+        ->bcc('gioi-duong@dimage.co.jp')
+        ->send(new TimesheetCreated());
         return redirect(route('timesheets.index'));
     }
-    public function index(): Response 
+    // Update time sheet
+    public function update(Request $request, Timesheet $timesheet): RedirectResponse
     {
-        return Inertia::classrender('Timesheet', [
-            //
+        //
+        Gate::authorize('update', $timesheet);
+
+        $validated = $request->validate([
+            'difficulties' => 'required|string|max:255',
+            'next_day_plans' => 'required|string|max:255',
         ]);
+
+        $timesheet->update($validated);
+
+        return redirect(route('timesheets.index'));
+    }
+    // Delete time sheet
+    public function destroy(Timesheet $timesheet): RedirectResponse
+    {
+        //
+        Gate::authorize('delete', $timesheet);
+
+        $timesheet->delete();
+
+        return redirect(route('timesheets.index'));
     }
 }
-
