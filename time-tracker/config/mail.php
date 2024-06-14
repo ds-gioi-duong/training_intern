@@ -34,17 +34,8 @@ return [
     |            "failover", "roundrobin"
     |
     */
-    'mailgun' => [
-        'transport' => 'mailgun',
-        // 'client' => [
-        //     'timeout' => 5,
-        // ],
-    ],
-    'mailersend' => [
-        'transport' => 'mailersend',
-    ],
-
-    'mailers' => [
+    
+       'mailers' => [
 
         'smtp' => [
             'transport' => 'smtp',
@@ -55,7 +46,7 @@ return [
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+            // 'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
         'ses' => [
