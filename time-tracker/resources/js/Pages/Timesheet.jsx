@@ -56,7 +56,7 @@ export default function Timesheet({ timesheet }) {
                         </Dropdown>
                     }
                 </div>
-                <p className="mt-4 text-lg text-gray-900">{timesheet.date}</p>
+                <Link to={`/timesheets/${timesheet.id}`} className="mt-4 text-lg text-gray-900">{timesheet.date}</Link>
                 {editing
                     ? <form onSubmit={submit}>
                         <textarea value={data.difficulties} onChange={e => setData('difficulties', e.target.value)} className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>

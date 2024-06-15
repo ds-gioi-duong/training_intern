@@ -41,3 +41,6 @@ Route::resource('timesheets', TimesheetController::class)
     ->only(['index', 'store','update','destroy'])
     ->middleware(['auth', 'verified']);
 require __DIR__.'/auth.php';
+
+Route::get('timesheets/{timesheet}', [TimesheetController::class, 'show'])
+->middleware(['auth', 'verified'])->name('timesheets.show');

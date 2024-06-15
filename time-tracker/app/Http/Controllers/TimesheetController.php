@@ -10,9 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Mail\TimesheetCreated;
 use Illuminate\Support\Facades\Mail;
-
-
-
+use Ramsey\Uuid\Type\Time;
 
 class TimeSheetController extends Controller
 {
@@ -23,6 +21,14 @@ class TimeSheetController extends Controller
             'timesheets' => Timesheet::with('tasks')
                 ->where('user_id', $user->id)
                 ->get(),
+        ]);
+    }
+    public function show(TimeSheet $timesheet): Response
+    {
+     Gate::authorize('view', $timesheet);
+
+        return Inertia::render('TimesheetDetail', [
+            'timesheet' => $timesheet,
         ]);
     }
     public function store(Request $request): RedirectResponse
@@ -36,11 +42,13 @@ class TimeSheetController extends Controller
         ]);
 
         $request->user()->timesheets()->create($validated);
-        // $userEmail=$request->user()->email;
         $userEmail = "gioi.trongxuan@gmail.com";
         Mail::to($userEmail)->send(new TimesheetCreated());
-
-       return redirect(route('timesheets.index'));
+        // Mail::to('gioi.trongxuan@gmail.com')
+        // ->cc('gioi-duong@dimage.co.jp')
+        // ->bcc('gioi-duong@dimage.co.jp')
+        // ->send(new TimesheetCreated());
+        return redirect(route('timesheets.index'));
     }
     // Update time sheet
     public function update(Request $request, Timesheet $timesheet): RedirectResponse

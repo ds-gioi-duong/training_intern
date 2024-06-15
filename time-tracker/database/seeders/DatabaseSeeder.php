@@ -12,19 +12,12 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'username' => 'gioi',
+                'name' => 'Gioi Duong',
                 'email' => 'gioi.trongxuan@gmail.com',
-                'password' => bcrypt('encrypted_password_123'),
+                'password' => bcrypt('a'),
                 'avatar' => 'https://example.com/avatar1.jpg',
                 'description' => 'Software engineer with 5 years of experience',
                 'role' => 'Admin',
-            ],
-            [
-                'username' => 'duong',
-                'email' => 'a@gmail.com',
-                'password' => bcrypt('a'),
-                'avatar' => 'https://example.com/avatar2.jpg',
-                'description' => 'Frontend developer passionate about UX/UI design',
-                'role' => 'User',
             ],
         ]);
 
@@ -34,12 +27,6 @@ class DatabaseSeeder extends Seeder
                 'user_id' => 1,
                 'difficulties' => 'Encountered some technical issues with the server',
                 'next_day_plans' => 'Plan to resolve the server issues',
-            ],
-            [
-                'date' => '2024-06-06',
-                'user_id' => 2,
-                'difficulties' => 'Had difficulty integrating the new API',
-                'next_day_plans' => 'Plan to seek assistance from colleagues',
             ],
             [
                 'date' => '2024-06-07',
@@ -70,16 +57,8 @@ class DatabaseSeeder extends Seeder
                 'content' => 'Integrated API endpoints',
                 'time_spent' => '05:45:00',
             ],
-            [
-                'timesheet_id' => 3,
-                'content' => 'Optimized database queries for user dashboard',
-                'time_spent' => '02:45:00',
-            ],
-            [
-                'timesheet_id' => 3,
-                'content' => 'Reviewed code and provided feedback',
-                'time_spent' => '01:30:00',
-            ],
+            
+          
         ]);
     }
 }
