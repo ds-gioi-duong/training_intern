@@ -22,6 +22,7 @@ class TimesheetPolicy
     public function view(User $user, Timesheet $timesheet): bool
     {
         //
+        return $timesheet->user()->is($user);
     }
 
     /**
@@ -29,7 +30,7 @@ class TimesheetPolicy
      */
     public function create(User $user): bool
     {
-        //
+        
     }
 
     /**

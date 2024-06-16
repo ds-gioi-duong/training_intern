@@ -23,12 +23,11 @@ class TimeSheetController extends Controller
                 ->get(),
         ]);
     }
-    public function show(TimeSheet $timesheet): Response
+    public function show(Timesheet $timesheet): Response
     {
-     Gate::authorize('view', $timesheet);
-
+        Gate::authorize('view', $timesheet);
         return Inertia::render('TimesheetDetail', [
-            'timesheet' => $timesheet,
+            'timesheet' => $timesheet ,
         ]);
     }
     public function store(Request $request): RedirectResponse
@@ -74,5 +73,22 @@ class TimeSheetController extends Controller
         $timesheet->delete();
 
         return redirect(route('timesheets.index'));
+    }
+
+    public function showToday(): Response
+    {
+        $user = auth()->user();
+        $timesheet = Timesheet::where('user_id', $user->id)
+            ->where('date', now()->format('Y-m-d'))
+            ->first();
+
+        if ($timesheet) {
+            return Inertia::render('TimesheetDetail', [
+                'timesheet' => $timesheet ,
+            ]);
+        } else {
+            return Inertia::render('NoTimesheet'
+);
+        }
     }
 }

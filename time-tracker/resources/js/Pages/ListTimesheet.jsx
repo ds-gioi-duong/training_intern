@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head, usePage} from '@inertiajs/react';
 import Timesheet from './Timesheet';
-import { Link } from 'react-router-dom';
+
  
 export default function ListTimesheet({ auth, timesheets }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -22,9 +22,9 @@ export default function ListTimesheet({ auth, timesheets }) {
     return (
         <AuthenticatedLayout
         user={auth.user}
-        header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Timesheet</h2>}
+        header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Overview</h2>}
     >
-        <Head title="Timesheet" />
+        <Head title="Overview" />
 
         <div className="py-12">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

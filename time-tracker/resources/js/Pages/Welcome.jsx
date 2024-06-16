@@ -34,7 +34,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion,breadcrumbs }
                                 </Link>
                                     <nav aria-label="breadcrumb">
                                         <ol className="breadcrumb">
-                                            {breadcrumbs.map((breadcrumb) => (
+                                            {/* {breadcrumbs.map((breadcrumb) => (
                                                 <li key={breadcrumb.url} className="breadcrumb-item">
                                                     {breadcrumb.url ? (
                                                         <a href={breadcrumb.url}>{breadcrumb.title}</a>
@@ -42,7 +42,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion,breadcrumbs }
                                                         <span>{breadcrumb.title}</span>
                                                     )}  
                                                 </li>
-                                            ))}
+                                            ))} */}
                                         </ol>
                                     </nav>
                         </>

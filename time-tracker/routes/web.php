@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Inertia\Inertia;
+use App\Models\Timesheet;
 use App\Http\Controllers\UserController; // Import the UserController class
 
 Route::get('/', function () {
@@ -38,9 +39,20 @@ Route::middleware('auth')->group(function () {
 Route::resource('users', UserController::class);
 
 Route::resource('timesheets', TimesheetController::class)
-    ->only(['index', 'store','update','destroy'])
+    ->only(['index', 'store','update','destroy','showCurrent'])
     ->middleware(['auth', 'verified']);
 require __DIR__.'/auth.php';
 
+
+Route::get('timesheets/today', [TimesheetController::class, 'showToday'])
+    ->middleware(['auth', 'verified'])
+    ->name('timesheets.showToday');
+// Route::get('timesheets', [TimesheetController::class,'showCurrent'])
+//     ->middleware(['auth', 'verified'])->name('timesheets.showCurrent');
+
 Route::get('timesheets/{timesheet}', [TimesheetController::class, 'show'])
 ->middleware(['auth', 'verified'])->name('timesheets.show');
+
+Route::get('timesheets/null', function () {
+    return Inertia::render('NoTimesheet');
+})->middleware(['auth', 'verified'])->name('timesheets.null');
