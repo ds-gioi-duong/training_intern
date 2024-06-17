@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\TimesheetController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -56,3 +57,8 @@ Route::get('timesheets/{timesheet}', [TimesheetController::class, 'show'])
 Route::get('timesheets/null', function () {
     return Inertia::render('NoTimesheet');
 })->middleware(['auth', 'verified'])->name('timesheets.null');
+
+Route::resource('timesheets/{timesheet}/tasks', TaskController::class)
+    ->only(['store','destroy'])
+    ->middleware(['auth', 'verified']);
+require __DIR__.'/auth.php';
