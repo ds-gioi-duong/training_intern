@@ -23,7 +23,6 @@ class CreateTasksTable extends Migration
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate()->nullable()->comment('Update timestamp');
             
             // Define the foreign key constraint
-            $table->foreign('timesheet_id')->references('id')->on('timesheets')->onDelete('cascade');
         });
     }
 

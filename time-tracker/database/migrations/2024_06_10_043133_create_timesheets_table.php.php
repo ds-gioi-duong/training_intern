@@ -22,9 +22,6 @@ class CreateTimesheetsTable extends Migration
             $table->text('next_day_plans')->nullable()->comment('Plans for the next day');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Creation timestamp');
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate()->nullable()->comment('Update timestamp');
-            
-            // Define the foreign key constraint
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
