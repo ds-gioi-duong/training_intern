@@ -1,6 +1,6 @@
 # training_intern
 
-# Bài tập training PHP phần 1 - Tìm hiểu về Laravel 10
+# Bài tập training PHP phần 1 - Tìm hiểu về Laravel 11
 
 ## Mô tả
 
@@ -35,7 +35,7 @@ https://docs.google.com/spreadsheets/d/1yo7DOcFnZ939w4OnVug2Pgaa1EVY7XquwHXn3pt_
 
 2.3. Tạo code base cơ bản:
 - PHP 8.1, MariaDB
-- Laravel 10
+- Laravel 1111
 - migrations
 - layouts
 
