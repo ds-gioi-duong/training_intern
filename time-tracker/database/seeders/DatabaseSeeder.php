@@ -40,24 +40,9 @@ class DatabaseSeeder extends Seeder
             [
                 'timesheet_id' => 1,
                 'content' => 'Implemented new authentication feature',
-                'time_spent' => '04:30:00',
-            ],
-            [
-                'timesheet_id' => 1,
-                'content' => 'Debugged and fixed database connection issue',
-                'time_spent' => '02:15:00',
-            ],
-            [
-                'timesheet_id' => 2,
-                'content' => 'Designed login page UI',
-                'time_spent' => '03:00:00',
-            ],
-            [
-                'timesheet_id' => 2,
-                'content' => 'Integrated API endpoints',
-                'time_spent' => '05:45:00',
-            ],
-            
+                'start_time' => '2024-06-05 09:00:00',
+                'end_time' => '2024-06-05 11:00:00',
+            ]
           
         ]);
     }

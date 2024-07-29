@@ -8,24 +8,19 @@ use App\Models\Timesheet;
 use Inertia\Response;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreTaskRequest;
 use App\Mail\TimesheetCreated;
 use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
    
-    public function store(Request $request): RedirectResponse
+    public function store(StoreTaskRequest $request): RedirectResponse
     {
 
-        $validated = $request->validate([
-            'timesheet_id' => 'required',
-            'content' => 'string|max:255',
-            'time_spent' => 'required|integer|min:1',
-        ]);
-        $timesheet=Timesheet::find($request->timesheet_id);
-        $timesheet->tasks()->create($validated);
-        return redirect(route('timesheets.show',$request->timesheet_id,));
+        $validated = $request->validated();
+        Task::create($validated);
+        return redirect(route('timesheets.show',$request->timesheet_id));
     }
 
     

@@ -4,29 +4,31 @@ import React, { useState } from 'react';
 import { useForm, Head, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 
-export default function TimesheetDetail({ timesheet }) {
+export default function TimesheetDetail({ timesheet , tasks}) {
     const { auth } = usePage().props;
     const { data, setData, post, processing, reset, errors } = useForm({
         timesheet_id: timesheet.id,
         content: '',
-        time_start: '',
-        time_end: '',
-        time_spent: '',
+        start_time: '',
+        end_time: '',
     });
 
-    const calculateTimeSpent = (start, end) => {
-        const startTime = new Date(`1970-01-01T${start}:00`);
-        const endTime = new Date(`1970-01-01T${end}:00`);
-        const diff = (endTime - startTime) / 1000 / 60; // Difference in minutes
-        return diff > 0 ? diff : 0;
-    };
-
-
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
-        const timeSpent = calculateTimeSpent(data.time_start, data.time_end);
-        setData('time_spent', timeSpent);
-        post(route('tasks.store', timesheet, { absolute: false }), { onSuccess: () => reset() });
+        //chuyển đổi từ giờ sang timestamp
+        const start_time = new Date(timesheet.date + 'T' + data.start_time + ':00Z').toISOString();
+        const end_time = new Date(timesheet.date + 'T' + data.end_time + ':00Z').toISOString();
+        setData(prevData => ({
+            ...prevData,
+            start_time: start_time,
+            end_time: end_time
+        }), async () => {
+            try {
+                await post(route('tasks.store', timesheet, { absolute: false }), { onSuccess: reset });
+            } catch (error) {
+                console.error(error);
+            }
+        });
     };
 
     return (
@@ -42,11 +44,12 @@ export default function TimesheetDetail({ timesheet }) {
                 <p>Ngày: {timesheet.date}</p>
 
                 <h2>Các công việc đã làm trong ngày</h2>
-                {timesheet.tasks && timesheet.tasks.map((task, index) => (
+                {tasks.map((task, index) => (
+
                     <div key={index} className="border-b border-gray-200 py-4">
-                        <p><strong>Thời gian: {task.time_used}</strong></p>
+                        <p><strong>Thời gian:  {task.time_spent}</strong></p>
                         <p><strong>Task ID:</strong> {task.id ? task.id : 'N/A'}</p>
-                        <p><strong>Nội dung task:</strong> {task.description}</p>
+                        <p><strong>Nội dung task:</strong> {task.content}</p>
                     </div>
                 ))}
 
@@ -68,27 +71,28 @@ export default function TimesheetDetail({ timesheet }) {
                             id="newTaskName"
                             value={data.content}
                             onChange={(e) => setData('content', e.target.value)}
+                            className=" dark:bg-gray-800 bg-white"
                         />
                     </div>
                     <div>
                         <label htmlFor="time_start">Thời gian bắt đầu</label>
                         <input
                             type="time"
-                            id="time_start"
-                            name="time_start"
-                            value={data.time_start}
-                            onChange={(e) => setData('time_start', e.target.value)}
-                            className="bg-gray-800"
+                            id="start_time"
+                            name="start_time"
+                            value={data.start_time}
+                            onChange={(e) => setData('start_time', e.target.value )}
+                            className="dark:bg-gray-800 bg-white"
                         />
                     </div>
                     <div>
-                        <label htmlFor="time_end">Thời gian kết thúc</label>
+                        <label htmlFor="end_time">Thời gian kết thúc</label>
                         <input
                             type="time"
-                            id="time_end"
-                            name="time_end"
-                            value={data.time_end}
-                            onChange={(e) => setData('time_end', e.target.value)}
+                            id="end_time"
+                            name="end_time"
+                            value={data.end_time}
+                            onChange={(e) => setData('end_time', e.target.value)}
                             className="bg-gray-800"
 
                         />

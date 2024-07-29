@@ -8,6 +8,7 @@ use Inertia\Response;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTimesheetRequest;
 use App\Mail\TimesheetCreated;
 use Illuminate\Support\Facades\Mail;
 use Ramsey\Uuid\Type\Time;
@@ -28,17 +29,13 @@ class TimeSheetController extends Controller
         Gate::authorize('view', $timesheet);
         return Inertia::render('TimesheetDetail', [
             'timesheet' => $timesheet ,
+            'tasks' => $timesheet->tasks,
         ]);
     }
-    public function store(Request $request): RedirectResponse
+    public function store(StoreTimesheetRequest $request): RedirectResponse
     {
 
-        $validated = $request->validate([
-            'date' => 'required',
-            'user_id' => 'required',
-            'difficulties' => 'required|string|max:255',
-            'next_day_plans' => 'required|string|max:255',
-        ]);
+        $validated = $request->validated();
 
         $request->user()->timesheets()->create($validated);
         $userEmail = "gioi.trongxuan@gmail.com";

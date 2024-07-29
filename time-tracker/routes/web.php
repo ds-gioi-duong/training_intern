@@ -58,7 +58,7 @@ Route::get('timesheets/null', function () {
     return Inertia::render('NoTimesheet');
 })->middleware(['auth', 'verified'])->name('timesheets.null');
 
-Route::resource('timesheets/{timesheet}/tasks', TaskController::class)
-    ->only(['store','destroy'])
-    ->middleware(['auth', 'verified']);
+Route::post('timesheets/{timesheet}/tasks', [TaskController::class, 'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.store');
 require __DIR__.'/auth.php';
