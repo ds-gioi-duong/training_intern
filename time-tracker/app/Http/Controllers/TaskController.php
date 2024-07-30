@@ -14,23 +14,22 @@ use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
-   
-    public function store(StoreTaskRequest $request): RedirectResponse
+
+    public function store(StoreTaskRequest $request,Timesheet $timesheet) :RedirectResponse
     {
 
         $validated = $request->validated();
-        Task::create($validated);
-        return redirect(route('timesheets.show',$request->timesheet_id));
+        $timesheet->tasks()->create($validated);
+        return redirect(route('timesheets.show', $validated['timesheet_id']));
     }
 
-    
-    public function destroy(Task $task): RedirectResponse
+    public function destroy(Timesheet $timesheet, Task $task)
     {
-        //
-        Gate::authorize('delete', $task);
-
-        $task->delete();
-
-        return redirect(route('', absolute: false));
+        if ($task) {
+            $task->delete();
+            return response()->json(['message' => 'Task deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
     }
 }

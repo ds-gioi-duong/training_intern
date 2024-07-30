@@ -48,8 +48,6 @@ require __DIR__.'/auth.php';
 Route::get('timesheets/today', [TimesheetController::class, 'showToday'])
     ->middleware(['auth', 'verified'])
     ->name('timesheets.showToday');
-// Route::get('timesheets', [TimesheetController::class,'showCurrent'])
-//     ->middleware(['auth', 'verified'])->name('timesheets.showCurrent');
 
 Route::get('timesheets/{timesheet}', [TimesheetController::class, 'show'])
 ->middleware(['auth', 'verified'])->name('timesheets.show');
@@ -61,4 +59,8 @@ Route::get('timesheets/null', function () {
 Route::post('timesheets/{timesheet}/tasks', [TaskController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.store');
+
+Route::delete('timesheets/{timesheet}/tasks/{task}', [TaskController::class, 'destroy'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.destroy');
 require __DIR__.'/auth.php';

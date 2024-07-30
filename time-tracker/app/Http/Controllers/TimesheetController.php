@@ -12,6 +12,7 @@ use App\Http\Requests\StoreTimesheetRequest;
 use App\Mail\TimesheetCreated;
 use Illuminate\Support\Facades\Mail;
 use Ramsey\Uuid\Type\Time;
+use App\Models\Task;
 
 class TimeSheetController extends Controller
 {
@@ -28,8 +29,8 @@ class TimeSheetController extends Controller
     {
         Gate::authorize('view', $timesheet);
         return Inertia::render('TimesheetDetail', [
-            'timesheet' => $timesheet ,
-            'tasks' => $timesheet->tasks,
+            'timesheet' => Timesheet::with('tasks')->find($timesheet->id),
+            'tasks' => Task::where('timesheet_id', $timesheet->id)->get(),
         ]);
     }
     public function store(StoreTimesheetRequest $request): RedirectResponse
@@ -82,6 +83,7 @@ class TimeSheetController extends Controller
         if ($timesheet) {
             return Inertia::render('TimesheetDetail', [
                 'timesheet' => $timesheet ,
+                'tasks' => $timesheet->tasks,
             ]);
         } else {
             return Inertia::render('NoTimesheet'

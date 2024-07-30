@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head, usePage} from '@inertiajs/react';
-import Timesheet from './Timesheet';
+import Timesheet from '@/Components/Timesheet';
 
  
 export default function ListTimesheet({ auth, timesheets }) {
