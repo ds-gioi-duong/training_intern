@@ -20,7 +20,6 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the new user
     }
 
     public function show($id)

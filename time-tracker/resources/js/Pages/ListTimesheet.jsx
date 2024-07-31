@@ -22,18 +22,26 @@ export default function ListTimesheet({ auth, timesheets }) {
     return (
         <AuthenticatedLayout
         user={auth.user}
-        header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Overview</h2>}
+        header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">概要 </h2>}
     >
         <Head title="Overview" />
 
+       
+        <div>
+        <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                    {timesheets.map(timesheet =>
+                        <Timesheet key={timesheet.id} timesheet={timesheet} />
+                    
+                    )}
+                </div>
+        </div>
         <div className="py-12">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div className="p-6 text-gray-900 dark:text-gray-100">{auth.user.username}</div>
                     <form onSubmit={submit}>
                         <div className="mb-4">
                             <label htmlFor="date" className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">
-                                Date:
+                            日付:
                             </label>
                             <input
                                 type="date"
@@ -48,7 +56,7 @@ export default function ListTimesheet({ auth, timesheets }) {
                         </div>
                         <div className="mb-4">
                             <label htmlFor="difficulties" className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">
-                                Difficulties:
+                            困難:
                             </label>
                             <textarea
                                 id="difficulties"
@@ -61,7 +69,7 @@ export default function ListTimesheet({ auth, timesheets }) {
                         </div>
                         <div className="mb-4">
                             <label htmlFor="next_day_plans" className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">
-                                Next Day Plans:
+                            翌日の予定:
                             </label>
                             <textarea
                                 id="next_day_plans"
@@ -78,14 +86,6 @@ export default function ListTimesheet({ auth, timesheets }) {
                     </form>
                 </div>
             </div>
-        </div>
-        <div>
-        <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    {timesheets.map(timesheet =>
-                        <Timesheet key={timesheet.id} timesheet={timesheet} />
-                    
-                    )}
-                </div>
         </div>
     </AuthenticatedLayout>
       );

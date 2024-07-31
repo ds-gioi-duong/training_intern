@@ -2,6 +2,7 @@
 use App\Http\Controllers\TimesheetController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Diglactic\Breadcrumbs\Breadcrumbs;
@@ -19,9 +20,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/home', function () {
     return Inertia::render('Dashboard');
@@ -60,7 +61,11 @@ Route::post('timesheets/{timesheet}/tasks', [TaskController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.store');
 
-Route::delete('timesheets/{timesheet}/tasks/{task}', [TaskController::class, 'destroy'])
+Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.destroy');
+
+Route::get('dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard.index');
 require __DIR__.'/auth.php';

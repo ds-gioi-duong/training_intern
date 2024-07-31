@@ -9,9 +9,6 @@ use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTimesheetRequest;
-use App\Mail\TimesheetCreated;
-use Illuminate\Support\Facades\Mail;
-use Ramsey\Uuid\Type\Time;
 use App\Models\Task;
 
 class TimeSheetController extends Controller
@@ -35,37 +32,25 @@ class TimeSheetController extends Controller
     }
     public function store(StoreTimesheetRequest $request): RedirectResponse
     {
-
         $validated = $request->validated();
-
         $request->user()->timesheets()->create($validated);
-        $userEmail = "gioi.trongxuan@gmail.com";
-        Mail::to($userEmail)->send(new TimesheetCreated());
-        // Mail::to('gioi.trongxuan@gmail.com')
-        // ->cc('gioi-duong@dimage.co.jp')
-        // ->bcc('gioi-duong@dimage.co.jp')
-        // ->send(new TimesheetCreated());
         return redirect(route('timesheets.index'));
     }
     // Update time sheet
     public function update(Request $request, Timesheet $timesheet): RedirectResponse
     {
-        //
         Gate::authorize('update', $timesheet);
 
         $validated = $request->validate([
             'difficulties' => 'required|string|max:255',
             'next_day_plans' => 'required|string|max:255',
         ]);
-
         $timesheet->update($validated);
-
         return redirect(route('timesheets.index'));
     }
     // Delete time sheet
     public function destroy(Timesheet $timesheet): RedirectResponse
     {
-        //
         Gate::authorize('delete', $timesheet);
 
         $timesheet->delete();
@@ -82,12 +67,13 @@ class TimeSheetController extends Controller
 
         if ($timesheet) {
             return Inertia::render('TimesheetDetail', [
-                'timesheet' => $timesheet ,
+                'timesheet' => $timesheet,
                 'tasks' => $timesheet->tasks,
             ]);
         } else {
-            return Inertia::render('NoTimesheet'
-);
+            return Inertia::render(
+                'NoTimesheet'
+            );
         }
     }
 }

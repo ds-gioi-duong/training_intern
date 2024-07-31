@@ -6,11 +6,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import Task from "@/Components/Task";
 
 export default function TimesheetDetail({ timesheet, tasks }) {
+    
     const { auth } = usePage().props;
-    const handleDelete = (taskId) => {
-        setTasks(tasks.filter((task) => task.id !== taskId));
-    };
-
     const [times, setTimes] = useState({ start: "", end: "" });
     const { data, setData, post, processing, reset, errors } = useForm({
         timesheet_id: timesheet.id,
@@ -46,42 +43,37 @@ export default function TimesheetDetail({ timesheet, tasks }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Timesheet
+                    タイムシート
                 </h2>
             }
         >
             <Head title="Timesheet" />
 
             <div className="dark:text-white">
-                <h1>Chi tiết Timesheet</h1>
-                <p>ID: {timesheet.id}</p>
-                <p>Ngày: {timesheet.date}</p>
+                <h1>タイムシートの詳細</h1>
+                <p>日: {timesheet.date}</p>
 
-                <h2>Các công việc đã làm trong ngày</h2>
+                <h2>タスク</h2>
 
                 <div>
                     {tasks.map((task) => (
-                        <Task
-                            key={task.id}
-                            task={task}
-                            onDelete={handleDelete}
-                        />
+                        <Task key={task.id} task={task} />
                     ))}
                 </div>
 
-                <h2>Các khó khăn gặp phải</h2>
+                <h2>困難</h2>
                 <p>{timesheet.difficulties}</p>
 
-                <h2>Các dự định sẽ làm trong ngày tiếp theo</h2>
+                <h2>翌日の予定</h2>
                 <p>{timesheet.next_day_plans}</p>
 
-                <h2>Note</h2>
+                <h2>ノート</h2>
                 <p>{timesheet.note}</p>
 
-                <h2>Thêm Task Mới</h2>
+                <h2>T新しいタスクを追加</h2>
                 <form onSubmit={submit}>
                     <div>
-                        <label htmlFor="newTaskName">Tên Task:</label>
+                        <label htmlFor="newTaskName">タスク名:</label>
                         <input
                             type="text"
                             id="newTaskName"
@@ -91,7 +83,7 @@ export default function TimesheetDetail({ timesheet, tasks }) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="start_time">Thời gian bắt đầu</label>
+                        <label htmlFor="start_time">開始時間</label>
                         <input
                             type="time"
                             id="start_time"
@@ -102,7 +94,7 @@ export default function TimesheetDetail({ timesheet, tasks }) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="end_time">Thời gian kết thúc</label>
+                        <label htmlFor="end_time">終了時間</label>
                         <input
                             type="time"
                             id="end_time"
@@ -113,7 +105,7 @@ export default function TimesheetDetail({ timesheet, tasks }) {
                         />
                     </div>
                     <PrimaryButton className="mt-4" disabled={processing}>
-                        Submit
+                    提出 
                     </PrimaryButton>
                 </form>
             </div>

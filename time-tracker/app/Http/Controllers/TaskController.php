@@ -23,13 +23,10 @@ class TaskController extends Controller
         return redirect(route('timesheets.show', $validated['timesheet_id']));
     }
 
-    public function destroy(Timesheet $timesheet, Task $task)
+    public function destroy( Task $task):RedirectResponse
     {
-        if ($task) {
-            $task->delete();
-            return response()->json(['message' => 'Task deleted successfully']);
-        } else {
-            return response()->json(['message' => 'Task not found'], 404);
-        }
+      
+        $task->delete();
+        return redirect(route('timesheets.show', $task->timesheet_id));
     }
 }
