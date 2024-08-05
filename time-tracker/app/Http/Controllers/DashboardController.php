@@ -19,7 +19,7 @@ class DashboardController extends Controller {
 
         $totalTimesheets = $timesheets->count();
         $totalTasks = $tasks->count();
-        // $totalTasksTime = $tasks->sum('end-time'- 'start-time');
+        // $totalTasksTime = $tasks->sum('end-time'- 'start-time');`
 
         $data = [
             'totalTimesheets' => $timesheets,

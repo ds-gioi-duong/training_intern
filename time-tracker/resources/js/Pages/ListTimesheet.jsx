@@ -81,7 +81,7 @@ export default function ListTimesheet({ auth, timesheets }) {
                             <InputError message={errors.next_day_plans} className="mt-2" />
                         </div>
                         <div className="flex items-center justify-center">
-                            <PrimaryButton className="mt-4" disabled={processing} >Submit</PrimaryButton>
+                            <PrimaryButton className="mt-4" disabled={processing} >提出する</PrimaryButton>
                         </div>
                     </form>
                 </div>

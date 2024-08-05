@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreTimesheetRequest;
 use App\Models\Task;
 
-class TimeSheetController extends Controller
+class TimesheetController extends Controller
 {
     public function index(): Response
     {
@@ -21,7 +21,7 @@ class TimeSheetController extends Controller
                 ->where('user_id', $user->id)
                 ->get(),
         ]);
-    }
+    } 
     public function show(Timesheet $timesheet): Response
     {
         Gate::authorize('view', $timesheet);
@@ -32,6 +32,7 @@ class TimeSheetController extends Controller
     }
     public function store(StoreTimesheetRequest $request): RedirectResponse
     {
+        
         $validated = $request->validated();
         $request->user()->timesheets()->create($validated);
         return redirect(route('timesheets.index'));

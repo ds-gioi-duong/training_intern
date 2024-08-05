@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -122,6 +121,18 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    'aliases' => [
+    // Other Aliases
+    'App' => Illuminate\Support\Facades\App::class,
+    'Artisan' => Illuminate\Support\Facades\Artisan::class,
+    'Auth' => Illuminate\Support\Facades\Auth::class,
+    'Blade' => Illuminate\Support\Facades\Blade::class,
+    'Cache' => Illuminate\Support\Facades\Cache::class,
+    'Crypt' => Illuminate\Support\Facades\Crypt::class, 
+    'Encrypter' => Illuminate\Support\Facades\Crypt::class, 
+    'Cookie' => Illuminate\Support\Facades\Cookie::class, 
+],
 
 
 ];

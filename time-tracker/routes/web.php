@@ -58,12 +58,16 @@ Route::get('timesheets/null', function () {
 })->middleware(['auth', 'verified'])->name('timesheets.null');
 
 Route::post('timesheets/{timesheet}/tasks', [TaskController::class, 'store'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth'])
     ->name('tasks.store');
 
 Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.destroy');
+
+Route::patch('tasks/{task}', [TaskController::class, 'update'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.update');
 
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
