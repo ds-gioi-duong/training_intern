@@ -11,7 +11,7 @@ class UpdateTimesheetRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateTimesheetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+                'difficulties' => 'required|string|max:255',
+                'next_day_plans' => 'required|string|max:255',
         ];
     }
 }

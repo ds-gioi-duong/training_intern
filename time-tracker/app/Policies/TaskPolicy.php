@@ -43,7 +43,8 @@ class TaskPolicy
     public function update(User $user, Task $task): bool
     {
         //
-        return true;
+        return $task->timesheet()->user()->is($user);
+        
 
     }
 

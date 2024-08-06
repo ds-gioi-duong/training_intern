@@ -5,76 +5,47 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Timesheet;
 use Inertia\Response;
-use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreTimesheetRequest;
-use App\Models\Task;
-
+use App\Repositories\Interface\TimesheetRepositoryInterface;
+use App\Http\Requests\UpdateTimesheetRequest;
 class TimesheetController extends Controller
 {
+    protected $timesheetRepository;
+    public function __construct(TimesheetRepositoryInterface $timesheetRepository)
+    {
+        $this->timesheetRepository = $timesheetRepository;
+    }
     public function index(): Response
     {
-        $user = auth()->user();
-        return Inertia::render('ListTimesheet', [
-            'timesheets' => Timesheet::with('tasks')
-                ->where('user_id', $user->id)
-                ->get(),
-        ]);
+        $user = auth()->user(); 
+        return $this->timesheetRepository->all($user->id); 
     } 
     public function show(Timesheet $timesheet): Response
     {
-        Gate::authorize('view', $timesheet);
-        return Inertia::render('TimesheetDetail', [
-            'timesheet' => Timesheet::with('tasks')->find($timesheet->id),
-            'tasks' => Task::where('timesheet_id', $timesheet->id)->get(),
-        ]);
+        Gate::authorize('view', $timesheet);  
+        return $this->timesheetRepository->show($timesheet->id);
     }
     public function store(StoreTimesheetRequest $request): RedirectResponse
     {
-        
-        $validated = $request->validated();
-        $request->user()->timesheets()->create($validated);
+        $this->timesheetRepository->create($request->all());
         return redirect(route('timesheets.index'));
     }
-    // Update time sheet
-    public function update(Request $request, Timesheet $timesheet): RedirectResponse
+    public function update(Timesheet $timesheet,UpdateTimesheetRequest $request): RedirectResponse
     {
         Gate::authorize('update', $timesheet);
-
-        $validated = $request->validate([
-            'difficulties' => 'required|string|max:255',
-            'next_day_plans' => 'required|string|max:255',
-        ]);
-        $timesheet->update($validated);
-        return redirect(route('timesheets.index'));
+        $this->timesheetRepository->update($request->all(), $timesheet->id);
+        return redirect(route('timesheets.index'));    
     }
-    // Delete time sheet
     public function destroy(Timesheet $timesheet): RedirectResponse
     {
         Gate::authorize('delete', $timesheet);
-
-        $timesheet->delete();
-
+        $this->timesheetRepository->delete($timesheet->id); 
         return redirect(route('timesheets.index'));
     }
-
-    public function showToday(): Response
+    public function showToday(): Response 
     {
         $user = auth()->user();
-        $timesheet = Timesheet::where('user_id', $user->id)
-            ->where('date', now()->format('Y-m-d'))
-            ->first();
-
-        if ($timesheet) {
-            return Inertia::render('TimesheetDetail', [
-                'timesheet' => $timesheet,
-                'tasks' => $timesheet->tasks,
-            ]);
-        } else {
-            return Inertia::render(
-                'NoTimesheet'
-            );
-        }
+        return $this->timesheetRepository->showTodayTimesheet($user->id); 
     }
 }

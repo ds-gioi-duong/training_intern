@@ -1,55 +1,17 @@
-import React, { useState } from 'react';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import React, { useState } from "react";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { Link, useForm, usePage } from "@inertiajs/react";
 
 export default function Task({ task }) {
-    const { auth } = usePage().props;
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const [editing, setEditing] = useState(false);
-
     const { data, setData, patch, clearErrors, reset, errors } = useForm({
         content: task.content,
     });
-
-    const handleDelete = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (confirm('Are you sure you want to delete this task?')) {
-            try {
-                const response = await fetch(route('tasks.destroy',  task.id), {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken
-                    }
-                });
-                
-                if (response.ok) {
-                    alert('Task deleted successfully.');
-                    // Cập nhật giao diện người dùng, ví dụ: xóa task khỏi danh sách
-                    document.getElementById(`${task.id}`).remove();
-                } else {
-                    alert('Failed to delete task.');
-                    // Xử lý các lỗi khác nếu cần thiết
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while deleting the task.');
-            }
-        }
-    };
-    
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await patch(route('tasks.update', task.id), {
-            onSuccess: () => {
-                setEditing(false);
-                reset();
-                clearErrors();
-            },
-            onError: () => {
-            }
+        patch(route("tasks.update", task.id), {
+            onSuccess: () =>setEditing(false), 
         });
     };
 
@@ -59,44 +21,53 @@ export default function Task({ task }) {
                 <div className="flex justify-between items-center">
                     <div>
                         <small className="ml-2 text-sm text-gray-600">{`${task.start_time}-${task.end_time}`}</small>
-                        {task.created_at !== task.updated_at && <small className="text-sm text-gray-600"> &middot; edited</small>}
+                        {task.created_at !== task.updated_at && (
+                            <small className="text-sm text-gray-600">
+                                {" "}
+                                &middot; edited
+                            </small>
+                        )}
                     </div>
-                    <button 
-                        className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" 
+                    <button
+                        className="block w-full px-4 py-2 text-start text-sm leading-5 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
                         onClick={() => setEditing(true)}
                     >
                         編集
                     </button>
 
-                    <Link href={route('tasks.destroy', task.id)}
-                                    method="delete"
-                                
-                         className="ml-2 px-4 py-2 bg-red-600 text-white rounded">
-                            削除
+                    <Link
+                        as="button"
+                        href={route("tasks.destroy", task.id)}
+                        method="delete"
+                        className="ml-2 px-4 py-2 bg-red-600 text-white rounded"
+                    >
+                        削除
                     </Link>
-                    
                 </div>
 
                 {editing ? (
                     <form onSubmit={handleSubmit}>
-                        <textarea 
-                            value={data.content} 
-                            onChange={e => setData('content', e.target.value)} 
-                            className="w-full mt-2 p-2 border border-gray-300 rounded"
-                        />
+                        <textarea
+                            value={data.content}
+                            onChange={(e) => setData("content", e.target.value)}
+                            className="w- full mt-2 p-2 border border-gray-300 rounded"
+                        >
+                            `
+                        </textarea>
                         <InputError message={errors.content} className="mt-2" />
                         <div className="space-x-2 mt-4">
-                            <PrimaryButton type="submit">保存</PrimaryButton>
-                            <button 
-                                type="button" 
+                            <PrimaryButton >保存</PrimaryButton>
+                            <button
+                                type="button"
                                 className="mt-4 px-4 py-2 border border-gray-300 rounded"
-                                onClick={() => { 
-                                    setEditing(false); 
-                                    reset(); 
-                                    clearErrors(); 
+                                onClick={() => {
+                                    setEditing(false);
+                                    reset();
+                                    clearErrors();
+                                    console.log("cancel");
                                 }}
                             >
-                                キャンセル 
+                                キャンセル
                             </button>
                         </div>
                     </form>

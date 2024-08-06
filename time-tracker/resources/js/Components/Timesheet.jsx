@@ -25,8 +25,8 @@ export default function Timesheet({ timesheet }) {
     const [editing, setEditing] = useState(false);
 
     const { data, setData, patch, clearErrors, reset, errors } = useForm({
-        difficulties: "",
-        next_day_plans: "",
+        difficulties: timesheet.difficulties,
+        next_day_plans: timesheet.next_day_plans,
     });
     const submit = (e) => {
         e.preventDefault();
