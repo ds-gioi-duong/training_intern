@@ -3,17 +3,14 @@ namespace App\Repositories;
 use App\Models\Timesheet;
 use App\Models\Task;
 use App\Repositories\Interface\TimesheetRepositoryInterface;
-use Inertia\Response;
-use Inertia\Inertia;
 class TimesheetRepository implements TimesheetRepositoryInterface
 {
-    public function all($user_id):Response
+    public function all($user_id)
     {
-        return Inertia::render('ListTimesheet', [
-            'timesheets' => Timesheet::with('tasks')
+           return Timesheet::with('tasks')
                 ->where('user_id', $user_id)
-                ->get(),
-        ]);
+                ->get();
+        
     }
     public function create(array $data)
     {
@@ -27,27 +24,15 @@ class TimesheetRepository implements TimesheetRepositoryInterface
     {
         return Timesheet::destroy($id);
     }
-    public function show($id) :Response
+    public function show($id) 
     {
-        return Inertia::render('TimesheetDetail', [
-            'timesheet' => Timesheet::with('tasks')->find($id),
-            'tasks' => Task::where('timesheet_id', $id)->get(),
-        ]); 
+        return Timesheet::with('tasks')->find($id);  
     }
-    public function showTodayTimesheet($user_id):Response
+    public function showTodayTimesheet($user_id)
     {
         $timesheet = Timesheet::where('user_id', $user_id)
         ->where('date', now()->format('Y-m-d'))
         ->first();
-     if ($timesheet) {
-        return Inertia::render('TimesheetDetail', [
-            'timesheet' => $timesheet,
-            'tasks' => $timesheet->tasks,
-        ]);
-    } else {
-        return Inertia::render(
-            'NoTimesheet'
-        );
-    }
+    
     }
 }

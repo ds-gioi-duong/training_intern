@@ -1,5 +1,6 @@
 // resources/js/components/TimesheetDetail.jsx
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import Timesheet from "@/Components/Timesheet";
 import React, { useState } from "react";
 import { useForm, Head, usePage } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -11,9 +12,9 @@ export default function TimesheetDetail({ timesheet, tasks }) {
     const [times, setTimes] = useState({ start: "", end: "" });
     const { data, setData, post, processing, reset, errors } = useForm({
         timesheet_id: timesheet.id,
-        content: "",
-        start_time: "",
-        end_time: "",
+        name: "",
+        start: "",
+        end: "",
     });
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,7 +24,7 @@ export default function TimesheetDetail({ timesheet, tasks }) {
         }));
         setData((prevData) => ({
             ...prevData,
-            [`${name}_time`]: `${timesheet.date} ${value}:00`,
+            [`${name}`]: `${timesheet.date} ${value}:00`,
         }));
     };
 
@@ -48,7 +49,7 @@ export default function TimesheetDetail({ timesheet, tasks }) {
             }
         >
             <Head title="Timesheet" />
-
+            <Timesheet timesheet={timesheet} />
             <div className="dark:text-white">
                 <h1>タイムシートの詳細</h1>
                 <p>日: {timesheet.date}</p>
@@ -57,7 +58,7 @@ export default function TimesheetDetail({ timesheet, tasks }) {
 
                 <div>
                     {tasks.map((task) => (
-                        <Task key={task.id} task={task} />
+                        <Task key={task.id} task={task} timesheet= {timesheet}/>
                     ))}
                 </div>
 
@@ -77,8 +78,8 @@ export default function TimesheetDetail({ timesheet, tasks }) {
                         <input
                             type="text"
                             id="newTaskName"
-                            value={data.content}
-                            onChange={(e) => setData("content", e.target.value)}
+                            value={data.name}
+                            onChange={(e) => setData("name", e.target.value)}
                             className=" dark:bg-gray-800 bg-white"
                         />
                     </div>

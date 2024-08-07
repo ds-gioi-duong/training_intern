@@ -24,7 +24,8 @@ class TaskPolicy
     public function view(User $user, Task $task): bool
     {
         //
-        return $task->timesheet()->user()->is($user);
+        // return $task->timesheet()->user()->is($user);
+        return true;
     }
 
     /**
@@ -43,7 +44,8 @@ class TaskPolicy
     public function update(User $user, Task $task): bool
     {
         //
-        return $task->timesheet()->user()->is($user);
+        // return $task->timesheet()->user()->is($user);
+        return true;
         
 
     }

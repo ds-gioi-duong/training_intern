@@ -23,9 +23,9 @@ class StoreTaskRequest extends FormRequest
 
        return [
             'timesheet_id' => 'required',
-            'content' => 'string|max:255',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'name' => 'string|max:255',
+            'start' => 'required',
+            'end' => 'required',
         ];
     }
 }

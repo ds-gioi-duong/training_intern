@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 
 export default function Task({ task }) {
     const [editing, setEditing] = useState(false);
     const { data, setData, patch, clearErrors, reset, errors } = useForm({
-        content: task.content,
+        name: task.name,
     });
     const handleSubmit = (e) => {
         e.preventDefault();
         patch(route("tasks.update", task.id), {
-            onSuccess: () =>setEditing(false), 
+            onSuccess: () => setEditing(false),
         });
     };
 
@@ -20,7 +21,7 @@ export default function Task({ task }) {
             <div className="flex-1">
                 <div className="flex justify-between items-center">
                     <div>
-                        <small className="ml-2 text-sm text-gray-600">{`${task.start_time}-${task.end_time}`}</small>
+                        <small className="ml-2 text-sm text-gray-600">{`${task.start}-${task.end}`}</small>
                         {task.created_at !== task.updated_at && (
                             <small className="text-sm text-gray-600">
                                 {" "}
@@ -48,17 +49,14 @@ export default function Task({ task }) {
                 {editing ? (
                     <form onSubmit={handleSubmit}>
                         <textarea
-                            value={data.content}
-                            onChange={(e) => setData("content", e.target.value)}
+                            value={data.name}
+                            onChange={(e) => setData("name", e.target.value)}
                             className="w- full mt-2 p-2 border border-gray-300 rounded"
-                        >
-                            `
-                        </textarea>
-                        <InputError message={errors.content} className="mt-2" />
+                        ></textarea>
+                        <InputError message={errors.name} className="mt-2" />
                         <div className="space-x-2 mt-4">
-                            <PrimaryButton >保存</PrimaryButton>
+                            <PrimaryButton>保存</PrimaryButton>
                             <button
-                                type="button"
                                 className="mt-4 px-4 py-2 border border-gray-300 rounded"
                                 onClick={() => {
                                     setEditing(false);
@@ -72,7 +70,7 @@ export default function Task({ task }) {
                         </div>
                     </form>
                 ) : (
-                    <p className="mt-4 text-lg text-gray-900">{task.content}</p>
+                    <p className="mt-4 text-lg text-gray-900">{task.name}</p>
                 )}
             </div>
         </div>

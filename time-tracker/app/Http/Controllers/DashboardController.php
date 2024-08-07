@@ -22,14 +22,14 @@ class DashboardController extends Controller {
         // $totalTasksTime = $tasks->sum('end-time'- 'start-time');`
 
         $data = [
-            'totalTimesheets' => $timesheets,
-            'totalTasks' => $tasks,
+            'timesheets' => $timesheets,
+            'tasks' => $tasks,
         ];
         //Test data
-        dd($data);
-        // return Inertia::render('Dashboard', [
-        //     'data' => 
-        // ]);
+        // dd($data);
+        return Inertia::render('Dashboard', [
+            'data' => $data
+        ]);
     }
 
 }

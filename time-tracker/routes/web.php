@@ -21,6 +21,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::patch('task/{task}', [TaskController::class, 'update'])
+    ->name('tasks.update');
 
 Route::get('/home', function () {
     return Inertia::render('Dashboard');
@@ -47,7 +49,7 @@ Route::get('timesheets', [TimesheetController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('timesheets.index');
 Route::patch('timesheets/{timesheet}', [TimesheetController::class, 'update'])
-    ->middleware(['auth', 'verified'])
+    // ->middleware(['auth', 'verified'])
     ->name('timesheets.update');
 Route::delete('timesheets/{timesheet}', [TimesheetController::class, 'destroy'])
     ->middleware(['auth', 'verified'])
@@ -72,9 +74,9 @@ Route::get('timesheets/null', function () {
 Route::post('timesheets/{timesheet}/tasks', [TaskController::class, 'store'])
     ->middleware(['auth'])
     ->name('tasks.store');
-Route::patch('tasks/{task}', [TaskController::class, 'update'])
-    ->middleware(['auth', 'verified'])
-    ->name('tasks.update');
+
+
+
 Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.destroy');

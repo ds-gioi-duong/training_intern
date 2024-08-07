@@ -6,7 +6,9 @@ use App\Models\Task;
 use App\Models\Timesheet;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Repositories\Interface\TaskRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
@@ -27,11 +29,13 @@ class TaskController extends Controller
         $this->taskRepository->delete($task->id);
         return redirect(route('timesheets.show', $task->timesheet_id));
     }
-    public function update( Task $task,StoreTaskRequest  $request):RedirectResponse
+    public function update( Task $task,UpdateTaskRequest  $request):RedirectResponse
     {
+      
         Gate::authorize('update', $task);
         $this->taskRepository->update($request->all(), $task->id);
         return redirect(route('timesheets.show', $task->timesheet_id));
+
     }
     
 }

@@ -10,10 +10,17 @@ class Task extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
+        'start',
+        'end',
+        'type',
+        'progress',
         'timesheet_id',
-        'content',
-        'start_time',
-        'end_time'
+        'dependencies',
+        'priority',
+        'isDisabled',
+        'styles',
+        'hideChildren',
     ];
 
     // Define the relationship with Timesheet
