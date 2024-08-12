@@ -12,7 +12,7 @@ export const ViewSwitcher = ({ onViewModeChange, onViewListChange, isChecked }) 
       <button className='Button' onClick={() => onViewModeChange(ViewMode.QuarterDay)}>
         Quarter of Day
       </button>
-      {/* <button className='Button' onClick={() => onViewModeChange(ViewMode.HalfDay)}>
+      <button className='Button' onClick={() => onViewModeChange(ViewMode.HalfDay)}>
         Half of Day
       </button>
       <button className='Button' onClick={() => onViewModeChange(ViewMode.Day)}>
@@ -23,7 +23,7 @@ export const ViewSwitcher = ({ onViewModeChange, onViewListChange, isChecked }) 
       </button>
       <button className='Button' onClick={() => onViewModeChange(ViewMode.Month)}>
         Month
-      </button> */}
+      </button>
 
       <div className='Switch'>
         <label className='Switch_Toggle'>

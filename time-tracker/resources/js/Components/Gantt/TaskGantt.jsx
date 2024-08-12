@@ -1,6 +1,6 @@
 import "gantt-task-react/dist/index.css";
 
-import { Gantt, ViewMode } from "gantt-task-react";
+import { Gantt, ViewMode } from 'gantt-task-react';
 import React, { useState, useEffect } from "react";
 import { getStartEndDateForProject, initTasks } from "./Helper.jsx";
 
@@ -8,7 +8,7 @@ import { ViewSwitcher } from "@/Components/Gantt/ViewSwitcher";
 
 function TaskGantt({ data }) {
     
-    const [view, setView] = useState(ViewMode.Day);
+    const [view, setView] = useState(ViewMode.Hour);
     const [tasks, setTasks] = useState(initTasks({ data })); 
     useEffect(() => {
             console.log("Data changed", data);
@@ -85,6 +85,7 @@ function TaskGantt({ data }) {
             <Gantt
                 tasks={tasks}
                 viewMode={view}
+                // viewDate={new Date()}
                 onDateChange={handleTaskChange}
                 onDelete={handleTaskDelete}
                 onProgressChange={handleProgressChange}
