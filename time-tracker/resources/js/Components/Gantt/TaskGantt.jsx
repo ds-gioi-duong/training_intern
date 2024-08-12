@@ -7,13 +7,19 @@ import { getStartEndDateForProject, initTasks } from "./Helper.jsx";
 import { ViewSwitcher } from "@/Components/Gantt/ViewSwitcher";
 
 function TaskGantt({ data }) {
+<<<<<<< HEAD
     
     const [view, setView] = useState(ViewMode.Hour);
     const [tasks, setTasks] = useState(initTasks({ data })); 
+=======
+
+    const [view, setView] = useState(ViewMode.Day);
+    const [tasks, setTasks] = useState(initTasks({ data }));
+>>>>>>> 2062cf47e05d66a5fa14d4f19af6c22f123984e4
     useEffect(() => {
-            console.log("Data changed", data);
-            const initializedTasks = initTasks({ data });
-            setTasks(initializedTasks);
+        console.log("Data changed", data);
+        const initializedTasks = initTasks({ data });
+        setTasks(initializedTasks);
     }, [data]);
     const [isChecked, setIsChecked] = useState(true);
     let columnWidth = 65;
@@ -76,12 +82,14 @@ function TaskGantt({ data }) {
 
     return (
         <div>
+
             <ViewSwitcher
                 onViewModeChange={(viewMode) => setView(viewMode)}
                 onViewListChange={setIsChecked}
                 isChecked={isChecked}
             />
             <h3>Gantt With Unlimited Height</h3>
+<<<<<<< HEAD
             <Gantt
                 tasks={tasks}
                 viewMode={view}
@@ -95,20 +103,44 @@ function TaskGantt({ data }) {
                 listCellWidth={isChecked ? "155px" : ""}
                 columnWidth={columnWidth}
             />
+=======
+            {/* nếu tasks rỗng thì không hiển thị */}
+            {tasks.length > 0 && (
+                <Gantt
+                    tasks={tasks}
+                    viewMode={view}
+                    onDateChange={handleTaskChange}
+                    onDelete={handleTaskDelete}
+                    onProgressChange={handleProgressChange}
+                    onDoubleClick={handleDblClick}
+                    onSelect={handleSelect}
+                    onExpanderClick={handleExpanderClick}
+                    listCellWidth={isChecked ? "155px" : ""}
+                    columnWidth={columnWidth}
+                    locale="jpn"
+                />
+            )}
+
+>>>>>>> 2062cf47e05d66a5fa14d4f19af6c22f123984e4
             <h3>Gantt With Limited Height</h3>
-            <Gantt
-                tasks={tasks}
-                viewMode={view}
-                onDateChange={handleTaskChange}
-                onDelete={handleTaskDelete}
-                onProgressChange={handleProgressChange}
-                onDoubleClick={handleDblClick}
-                onSelect={handleSelect}
-                onExpanderClick={handleExpanderClick}
-                listCellWidth={isChecked ? "155px" : ""}
-                ganttHeight={300}
-                columnWidth={columnWidth}
-            />
+            {tasks.length > 0 && (
+
+                <Gantt
+                    tasks={tasks}
+                    viewMode={view}
+                    onDateChange={handleTaskChange}
+                    onDelete={handleTaskDelete}
+                    onProgressChange={handleProgressChange}
+                    onDoubleClick={handleDblClick}
+                    onSelect={handleSelect}
+                    onExpanderClick={handleExpanderClick}
+                    listCellWidth={isChecked ? "155px" : ""}
+                    ganttHeight={300}
+                    columnWidth={columnWidth}
+
+                />
+            )}
+
         </div>
     );
 }
