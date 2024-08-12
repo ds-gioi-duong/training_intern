@@ -7,22 +7,22 @@ export const ViewSwitcher = ({ onViewModeChange, onViewListChange, isChecked }) 
   return (
     <div className='ViewContainer'>
       <button className='Button' onClick={() => onViewModeChange(ViewMode.Hour)}>
-        Hour
+      時間
       </button>
       <button className='Button' onClick={() => onViewModeChange(ViewMode.QuarterDay)}>
-        Quarter of Day
+      1/4日
       </button>
       <button className='Button' onClick={() => onViewModeChange(ViewMode.HalfDay)}>
-        Half of Day
+      半日
       </button>
       <button className='Button' onClick={() => onViewModeChange(ViewMode.Day)}>
-        Day
+      1日
       </button>
       <button className='Button' onClick={() => onViewModeChange(ViewMode.Week)}>
-        Week
+      1週間
       </button>
       <button className='Button' onClick={() => onViewModeChange(ViewMode.Month)}>
-        Month
+      1か月
       </button>
 
       <div className='Switch'>
@@ -34,7 +34,7 @@ export const ViewSwitcher = ({ onViewModeChange, onViewListChange, isChecked }) 
           />
           <span className='Slider' />
         </label>
-        Show Task List
+        タクスリストを表示
       </div>
     </div>
   )

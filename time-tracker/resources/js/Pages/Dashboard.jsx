@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import TaskGantt from '@/Components/Gantt/TaskGantt';
+import GanttChart from '@/Components/CustomGantt/GanttChart';
 
 export default function Dashboard({ auth ,data}) {
     return (
@@ -16,7 +17,9 @@ export default function Dashboard({ auth ,data}) {
                     </div>
                 </div>
             </div>
-            <TaskGantt data={data}/>
+            {/* <TaskGantt data={data}/> */}
+            <GanttChart />
         </AuthenticatedLayout>
     );
 }
+
