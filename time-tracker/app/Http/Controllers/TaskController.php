@@ -8,32 +8,32 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Repositories\Interface\TaskRepositoryInterface;
+use App\Services\TaskService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
-    protected $taskRepository;
+    protected $taskService;
     // Laravel sẽ tự động xử lý việc tiêm các phụ thuộc vào constructor của controller, miễn là các phụ thuộc đó đã được đăng ký trong service container. Đây là cách Laravel tự động quản lý việc tiêm các phụ thuộc vào controller mà không cần bạn phải làm thêm điều gì trong phần cấu hình route.
-    public function __construct(TaskRepositoryInterface $taskRepository)
+    public function __construct(TaskService $taskRepository)
     {
-        $this->taskRepository = $taskRepository;
+        $this->taskService = $taskRepository;
     }
-    public function store(Timesheet $timesheet,StoreTaskRequest  $request) :RedirectResponse
+    public function store(StoreTaskRequest  $request) :RedirectResponse
     {
-        $this->taskRepository->create($request->all());
-        return redirect(route('timesheets.show', $timesheet->id));
+        $this->taskService->store($request->all());
+        return redirect(route('timesheets.show', $request->timesheet_id));
     }
     public function destroy( Task $task):RedirectResponse
     {
-        $this->taskRepository->delete($task->id);
+        $this->taskService->destroy($task->id);
         return redirect(route('timesheets.show', $task->timesheet_id));
     }
     public function update( Task $task,UpdateTaskRequest  $request):RedirectResponse
     {
-      
         Gate::authorize('update', $task);
-        $this->taskRepository->update($request->all(), $task->id);
+        $this->taskService->update($request->all(), $task);
         return redirect(route('timesheets.show', $task->timesheet_id));
 
     }

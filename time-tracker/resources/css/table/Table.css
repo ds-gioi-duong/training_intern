@@ -1,0 +1,26 @@
+/* src/Timesheet.css */
+
+.timesheet {
+    width: 100%;
+    margin: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+  }
+  .time-cell.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  

@@ -30,7 +30,7 @@ export default function Timesheet({ timesheet }) {
     });
     const submit = (e) => {
         e.preventDefault();
-        patch(route("timesheets.update", '30'), {
+        patch(route("timesheets.update",timesheet.id), {
             onSuccess: () => setEditing(false),
         });
 

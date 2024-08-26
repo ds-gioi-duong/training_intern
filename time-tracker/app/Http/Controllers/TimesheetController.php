@@ -7,27 +7,27 @@ use App\Models\Timesheet;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreTimesheetRequest;
-use App\Repositories\Interface\TimesheetRepositoryInterface;
 use App\Http\Requests\UpdateTimesheetRequest;
+use App\Services\TimesheetService;
 use Inertia\Inertia;
 class TimesheetController extends Controller
 {
-    protected $timesheetRepository;
-    public function __construct(TimesheetRepositoryInterface $timesheetRepository)
+    protected $timesheetService;
+    public function __construct(TimesheetService $timesheetService)
     {
-        $this->timesheetRepository = $timesheetRepository;
+        $this->timesheetService = $timesheetService;
     }
     public function index(): Response
     {
 
         $user = auth()->user(); 
-        $timesheets= $this->timesheetRepository->all($user->id);
+        $timesheets= $this->timesheetService->all($user);
         return inertia('ListTimesheet', ['timesheets' => $timesheets]); 
     } 
     public function show(Timesheet $timesheet): Response
     {
         Gate::authorize('view', $timesheet);  
-        $timesheetDetail = $this->timesheetRepository->show($timesheet->id);
+        $timesheetDetail = $this->timesheetService->show($timesheet);
         return Inertia::render('TimesheetDetail', [
             'timesheet' => $timesheetDetail,
             'tasks' => $timesheetDetail->tasks,
@@ -35,26 +35,25 @@ class TimesheetController extends Controller
     }
     public function store(StoreTimesheetRequest $request): RedirectResponse
     {
-        $this->timesheetRepository->create($request->all());
+        $this->timesheetService->create($request);
         return redirect(route('timesheets.index'));
     }
     public function update(Timesheet $timesheet,UpdateTimesheetRequest $request): RedirectResponse
     {
-        dd($request->all());
         Gate::authorize('update', $timesheet);
-        $this->timesheetRepository->update($request->all(), $timesheet->id);
+        $this->timesheetService->update($request, $timesheet);
         return redirect(route('timesheets.index'));      
     } 
     public function destroy(Timesheet $timesheet): RedirectResponse
     { 
         Gate::authorize('delete', $timesheet);
-        $this->timesheetRepository->delete($timesheet->id); 
+        $this->timesheetService->delete($timesheet); 
         return redirect(route('timesheets.index'));
     }
     public function showToday(): Response 
     {
-        $user = auth()->user();
-        $timesheet = $this->timesheetRepository->showTodayTimesheet($user->id);
+        $user = auth()->user(); 
+        $timesheet = $this->timesheetService->showTodayTimesheet($user);
         if ($timesheet) {
             return Inertia::render('TimesheetDetail', [
                 'timesheet' => $timesheet,
@@ -64,6 +63,6 @@ class TimesheetController extends Controller
             return Inertia::render(
                 'NoTimesheet'
             );
-        }
+        }  
     }
 }

@@ -36,7 +36,6 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validate and update the user information
     }
 
     public function destroy($id)
