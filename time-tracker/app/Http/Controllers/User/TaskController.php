@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Models\Task;
-use App\Models\Timesheet;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Repositories\Interface\TaskRepositoryInterface;
 use App\Services\TaskService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 
 class TaskController extends Controller
 {

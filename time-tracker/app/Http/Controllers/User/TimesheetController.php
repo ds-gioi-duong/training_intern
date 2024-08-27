@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Support\Facades\Gate;
 use App\Models\Timesheet;
@@ -10,6 +10,7 @@ use App\Http\Requests\StoreTimesheetRequest;
 use App\Http\Requests\UpdateTimesheetRequest;
 use App\Services\TimesheetService;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 class TimesheetController extends Controller
 {
     protected $timesheetService;
@@ -19,7 +20,6 @@ class TimesheetController extends Controller
     }
     public function index(): Response
     {
-
         $user = auth()->user(); 
         $timesheets= $this->timesheetService->all($user);
         return inertia('ListTimesheet', ['timesheets' => $timesheets]); 

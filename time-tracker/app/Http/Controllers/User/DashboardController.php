@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -7,6 +7,8 @@ use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
 use App\Models\Timesheet;
+use App\Http\Controllers\Controller;
+
 class DashboardController extends Controller {
     public function index(): Response
     {
