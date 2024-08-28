@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\TimesheetController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\User\TimesheetController;
+use App\Http\Controllers\User\TaskController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Inertia\Inertia;
 use App\Models\Timesheet;
-use App\Http\Controllers\UserController; // Import the UserController class
+use App\Http\Controllers\User\UserController; // Import the UserController class
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
