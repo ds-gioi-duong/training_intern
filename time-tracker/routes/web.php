@@ -84,4 +84,4 @@ Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard.index');
-require __DIR__ . '/userAuth.php';
+require __DIR__ . '/auth.php';
