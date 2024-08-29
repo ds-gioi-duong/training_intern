@@ -2,11 +2,23 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+Route::middleware('admin-login')->group(function () {
+    Route::get('login', [AdminAuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('login', [AdminAuthenticatedSessionController::class, 'store']);
+});
 
-Route::get('/login', [AdminAuthenticatedSessionController::class, 'showAdminLoginForm'])->name('admin.login');
-Route::post('/login', [AdminAuthenticatedSessionController::class, 'adminLogin']);
+Route::get('/', function () {
+    return Inertia::render('Admin/Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     // Các routes khác dành cho admin
 });

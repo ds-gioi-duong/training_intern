@@ -29,7 +29,7 @@ class DashboardController extends Controller {
         ];
         //Test data
         // dd($data);
-        return Inertia::render('Dashboard', [
+        return Inertia::render('User/Dashboard', [
             'data' => $data
         ]);
     }

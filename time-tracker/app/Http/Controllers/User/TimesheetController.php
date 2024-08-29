@@ -22,13 +22,13 @@ class TimesheetController extends Controller
     {
         $user = auth()->user(); 
         $timesheets= $this->timesheetService->all($user);
-        return inertia('ListTimesheet', ['timesheets' => $timesheets]); 
+        return inertia('User/ListTimesheet', ['timesheets' => $timesheets]); 
     } 
     public function show(Timesheet $timesheet): Response
     {
         Gate::authorize('view', $timesheet);  
         $timesheetDetail = $this->timesheetService->show($timesheet);
-        return Inertia::render('TimesheetDetail', [
+        return Inertia::render('User/TimesheetDetail', [
             'timesheet' => $timesheetDetail,
             'tasks' => $timesheetDetail->tasks,
         ]); 
@@ -55,13 +55,13 @@ class TimesheetController extends Controller
         $user = auth()->user(); 
         $timesheet = $this->timesheetService->showTodayTimesheet($user);
         if ($timesheet) {
-            return Inertia::render('TimesheetDetail', [
+            return Inertia::render('User/TimesheetDetail', [
                 'timesheet' => $timesheet,
                 'tasks' => $timesheet->tasks,
             ]);
         } else {
             return Inertia::render(
-                'NoTimesheet'
+                'User/NoTimesheet'
             );
         }  
     }

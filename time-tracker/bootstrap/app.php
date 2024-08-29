@@ -16,13 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
+        $middleware->alias([
+                    'role' => RoleMiddleware::class ,
+                    'admin-login' => \Illuminate\Auth\Middleware\RedirectIfAuthenticated::class,
+                ]);
 
         //
-    })
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'role' => RoleMiddleware::class 
-        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

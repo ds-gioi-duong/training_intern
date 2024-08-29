@@ -12,7 +12,7 @@ use App\Models\Timesheet;
 use App\Http\Controllers\User\UserController; // Import the UserController class
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('User/Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -25,7 +25,7 @@ Route::patch('task/{task}', [TaskController::class, 'update'])
     ->name('tasks.update');
 
 Route::get('/home', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('User/Dashboard');
 })->middleware(['auth', 'verified'])->name('home');
 
 
