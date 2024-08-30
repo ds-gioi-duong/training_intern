@@ -1,6 +1,5 @@
-<?php
-
-namespace Illuminate\Auth\Middleware;
+<?php 
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -27,6 +26,22 @@ class RedirectIfAuthenticated
 
     protected function redirectTo(Request $request): ?string
     {
+        // Lấy thông tin người dùng hiện tại
+        $user = Auth::user();
+
+        if ($user) {
+            // Kiểm tra role của người dùng
+            switch ($user->role) {
+                case 'Admin':
+                    return route('admin.dashboard');
+                // case 'Manager':
+                //     return route('manager.dashboard');
+                default:
+                    return route('dashboard');
+            }
+        }
+
+        // Nếu không có người dùng hoặc không xác định được role, trả về URI mặc định
         return static::$redirectToCallback
             ? call_user_func(static::$redirectToCallback, $request)
             : $this->defaultRedirectUri();
@@ -34,13 +49,13 @@ class RedirectIfAuthenticated
 
     protected function defaultRedirectUri(): string
     {
-        $user = Auth::user();
-
-        if ($user->role === 'Admin') {
-            return route('admin.dashboard');
+        foreach (['dashboard', 'home'] as $uri) {
+            if (Route::has($uri)) {
+                return route($uri);
+            }
         }
 
-        return route('dashboard');
+        return '/';
     }
 
     public static function redirectUsing(callable $redirectToCallback)

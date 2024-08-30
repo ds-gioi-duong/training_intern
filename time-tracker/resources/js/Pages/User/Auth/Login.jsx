@@ -7,13 +7,12 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status, canResetPassword,err}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
         remember: false,
     });
-
     useEffect(() => {
         return () => {
             reset('password');
@@ -31,7 +30,7 @@ export default function Login({ status, canResetPassword }) {
             <Head title="Log in" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
+            {err.length !== 0 && <div className="mb-4 font-medium text-sm text-red-600">{err.error[0]}</div>}
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="メール" />

@@ -9,7 +9,7 @@ Route::middleware('admin-login')->group(function () {
 });
 
 Route::get('/', function () {
-    return Inertia::render('Admin/Welcome', [
+    return Inertia::render('Admin/Dashboard', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'phpVersion' => PHP_VERSION,
@@ -20,5 +20,4 @@ Route::get('/', function () {
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    // Các routes khác dành cho admin
 });

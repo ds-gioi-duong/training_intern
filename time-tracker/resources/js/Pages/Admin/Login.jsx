@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Checkbox from '@/Components/Checkbox';
-import AdminLayout from '@/Layouts/AdminLayout';
+import AdminLogin from '@/Layouts/AdminLogin';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -27,7 +27,7 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <AdminLayout>
+        <AdminLogin>
             <Head title="Admin login" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
@@ -92,6 +92,6 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
-        </AdminLayout>
+        </AdminLogin>
     );
 }

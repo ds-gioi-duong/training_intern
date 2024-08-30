@@ -14,30 +14,43 @@ use Inertia\Response;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Hiển thị trang đăng nhập.
      */
     public function create(): Response
     {
+        // dd( session('errors') ? session('errors')->getMessages() : []);
         return Inertia::render('User/Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'err' => session('errors') ? session('errors')->getMessages() : [],
         ]);
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Xử lý yêu cầu đăng nhập.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Xác thực người dùng
         $request->authenticate();
 
-        $request->session()->regenerate();
+        // Lấy thông tin người dùng hiện tại
+        $user = Auth::user();
 
-        return redirect()->intended(route('dashboard.index', absolute: false));
+        // Kiểm tra role của người dùng
+        if ($user && $user->role === 'User') {
+            // Nếu role là "User", làm mới phiên và chuyển hướng đến trang dashboard
+            $request->session()->regenerate();
+            return redirect()->intended(route('dashboard', absolute: false));
+        } else {
+            // Nếu role không phải "User", đăng xuất và chuyển hướng về trang đăng nhập với thông báo lỗi
+            Auth::logout();
+            return redirect()->route('login')->withErrors(['error' => 'Only users with the "User" role can log in.']);
+        }
     }
 
     /**
-     * Destroy an authenticated session.
+     * Xóa phiên làm việc của người dùng đã đăng nhập.
      */
     public function destroy(Request $request): RedirectResponse
     {

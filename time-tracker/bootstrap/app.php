@@ -4,6 +4,7 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\RedirectIfAuthenticated;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->alias([
                     'role' => RoleMiddleware::class ,
-                    'admin-login' => \Illuminate\Auth\Middleware\RedirectIfAuthenticated::class,
+                    'admin-login' => RedirectIfAuthenticated::class,
                 ]);
 
         //

@@ -84,5 +84,5 @@ Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
 
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('dashboard.index');
+    ->name('dashboard');
 require __DIR__ . '/auth.php';
