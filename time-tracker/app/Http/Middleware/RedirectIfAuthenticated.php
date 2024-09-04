@@ -26,11 +26,9 @@ class RedirectIfAuthenticated
 
     protected function redirectTo(Request $request): ?string
     {
-        // Lấy thông tin người dùng hiện tại
         $user = Auth::user();
 
         if ($user) {
-            // Kiểm tra role của người dùng
             switch ($user->role) {
                 case 'Admin':
                     return route('admin.dashboard');
@@ -41,7 +39,6 @@ class RedirectIfAuthenticated
             }
         }
 
-        // Nếu không có người dùng hoặc không xác định được role, trả về URI mặc định
         return static::$redirectToCallback
             ? call_user_func(static::$redirectToCallback, $request)
             : $this->defaultRedirectUri();

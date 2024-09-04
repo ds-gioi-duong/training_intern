@@ -1,13 +1,13 @@
 import React from "react";
-import { Link } from "@inertiajs/inertia-react";
 
+import NavLink from "@/Components/NavLink";
 const Sidebar = () => {
     return (
-        <div className="w-52 bg-gray-800 h-screen p-4">
+        <div className="w-52 bg-white-800 dark:bg-gray-800  h-screen p-4">
             <ul className="space-y-4">
                 <li>
                 <NavLink
-                    href={route("dashboard")}
+                    href={route("admin.dashboard")}
                     active={route().current("dashboard")}
                 >
                     {" "}
@@ -16,20 +16,36 @@ const Sidebar = () => {
                 </li>
                 <li>
                 <NavLink
-                    href={route("user-manager")}
+                    href={route("admin.user_manager")}
                     active={
-                        route().current("user-manager") 
+                        route().current("admin.user_manager") 
                     }
                 >
-                    概要
+                     ユーザー管理
                 </NavLink>
                 </li>
                 <li>
                 <NavLink
-                    href={route("message")}
-                    active={route().current("message")}
+                    href={route("admin.messages")}
+                    active={route().current("admin.messages")}
                 >
-                    今日
+                    メッセージ 
+                </NavLink>
+                </li>
+                <li>
+                <NavLink
+                  href={route("admin.settings")}
+                  active={route().current("admin.settings")}
+                  >
+                    設定
+                </NavLink>
+                </li>
+                <li>
+                <NavLink
+                  href={route("admin.logout")}
+                    method="post"
+                  >
+                    ログアウト 
                 </NavLink>
                 </li>
                 
@@ -41,9 +57,9 @@ const Sidebar = () => {
 };
 const AdminAuthenticated = ({ children, header }) => {
     return (
-        <div>
+        <div className="flex">
             <Sidebar />
-            <main>{children}</main>
+            <main className="flex-grow">{children}</main>
         </div>
     );
 };

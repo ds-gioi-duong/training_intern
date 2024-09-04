@@ -30,7 +30,7 @@ export default function Login({ status, canResetPassword,err}) {
             <Head title="Log in" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-            {err.length !== 0 && <div className="mb-4 font-medium text-sm text-red-600">{err.error[0]}</div>}
+            {err.length !== 0 && <div className="mb-4 font-medium text-sm text-red-600">{err.error}</div>}
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="メール" />

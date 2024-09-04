@@ -41,48 +41,50 @@ Route::middleware('auth')->group(function () {
 Route::resource('users', UserController::class);
 
 
-//Timesheet
-Route::get('timesheets/current', [TimesheetController::class, 'showCurrent'])
-    ->middleware(['auth', 'verified'])
-    ->name('timesheets.showCurrent');
-Route::get('timesheets', [TimesheetController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('timesheets.index');
-Route::patch('timesheets/{timesheet}', [TimesheetController::class, 'update'])
-    // ->middleware(['auth', 'verified'])
-    ->name('timesheets.update');
-Route::delete('timesheets/{timesheet}', [TimesheetController::class, 'destroy'])
-    ->middleware(['auth', 'verified'])
-    ->name('timesheets.destroy');
-Route::post('timesheets', [TimesheetController::class, 'store'])
-    ->middleware(['auth', 'verified'])
-    ->name('timesheets.store');
+Route::middleware('auth', 'role:User')->group(function () {
+    Route::get('timesheets/current', [TimesheetController::class, 'showCurrent'])
+        ->middleware(['verified'])
+        ->name('timesheets.showCurrent');
+    Route::get('timesheets', [TimesheetController::class, 'index'])
+        ->middleware(['verified'])
+        ->name('timesheets.index');
+    Route::patch('timesheets/{timesheet}', [TimesheetController::class, 'update'])
+        // ->middleware(['auth', 'verified'])
+        ->name('timesheets.update');
+    Route::delete('timesheets/{timesheet}', [TimesheetController::class, 'destroy'])
+        ->middleware(['verified'])
+        ->name('timesheets.destroy');
+    Route::post('timesheets', [TimesheetController::class, 'store'])
+        ->middleware(['verified'])
+        ->name('timesheets.store');
 
-Route::get('timesheets/today', [TimesheetController::class, 'showToday'])
-    ->middleware(['auth', 'verified'])
-    ->name('timesheets.showToday');
+    Route::get('timesheets/today', [TimesheetController::class, 'showToday'])
+        ->middleware(['verified'])
+        ->name('timesheets.showToday');
 
-Route::get('timesheets/{timesheet}', [TimesheetController::class, 'show'])
-    ->middleware(['auth', 'verified'])->name('timesheets.show');
+    Route::get('timesheets/{timesheet}', [TimesheetController::class, 'show'])
+        ->middleware(['verified'])->name('timesheets.show');
 
-Route::get('timesheets/null', function () {
-    return Inertia::render('NoTimesheet');
-})->middleware(['auth', 'verified'])->name('timesheets.null');
-
-
-//Task
-Route::post('timesheets/{timesheet}/tasks', [TaskController::class, 'store'])
-    ->middleware(['auth'])
-    ->name('tasks.store');
+    Route::get('timesheets/null', function () {
+        return Inertia::render('NoTimesheet');
+    })->middleware(['verified'])->name('timesheets.null');
 
 
+    //Task
+    Route::post('timesheets/{timesheet}/tasks', [TaskController::class, 'store'])
+        ->middleware(['auth'])
+        ->name('tasks.store');
 
-Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
-    ->middleware(['auth', 'verified'])
-    ->name('tasks.destroy');
 
 
-Route::get('dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
+        ->middleware(['verified'])
+        ->name('tasks.destroy');
+
+
+    Route::get('dashboard', [DashboardController::class, 'index'])
+        ->middleware(['verified'])
+        ->name('dashboard');
+});
+
 require __DIR__ . '/auth.php';

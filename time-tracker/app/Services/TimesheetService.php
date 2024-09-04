@@ -24,7 +24,7 @@ class TimesheetService
         $timesheetDetail = $this->timesheetRepository->show($timesheet->id);
         return $timesheetDetail;
     }
-    public function store(StoreTimesheetRequest $request)
+    public function create(StoreTimesheetRequest $request)
     {
         $this->timesheetRepository->create($request->all());
     }
